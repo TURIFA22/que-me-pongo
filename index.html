@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleMate - Tu Asistente de Moda Personal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ec4899">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">👗 StyleMate</h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-page="trending">Trending</button>
+                    <button class="nav-btn" data-page="create">Crear Look</button>
+                    <button class="nav-btn" data-page="outfits">Mis Outfits</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page active">
+                <div class="container">
+                    <h2>¡Bienvenido a StyleMate! 🎉</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Looks Creados</h3>
+                            <div class="stat-number">12</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Favoritos</h3>
+                            <div class="stat-number">8</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Trending Vistos</h3>
+                            <div class="stat-number">25</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <h3>Acciones Rápidas</h3>
+                        <div class="action-grid">
+                            <button class="action-btn" onclick="showPage('create')">
+                                ✨ Crear Nuevo Look
+                            </button>
+                            <button class="action-btn" onclick="showPage('trending')">
+                                🔥 Ver Trending
+                            </button>
+                            <button class="action-btn" onclick="showWeatherOutfit()">
+                                🌤️ Outfit del Clima
+                            </button>
+                            <button class="action-btn" onclick="showStyleAnalysis()">
+                                📊 Análisis de Estilo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Page -->
+            <div id="trending" class="page">
+                <div class="container">
+                    <h2>🔥 Looks Trending</h2>
+                    <div class="trending-grid" id="trendingGrid">
+                        <!-- Trending looks will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Look Page -->
+            <div id="create" class="page">
+                <div class="container">
+                    <h2>✨ Crear Nuevo Look</h2>
+                    <div class="create-form">
+                        <div class="form-group">
+                            <label>Ocasión:</label>
+                            <select id="occasion">
+                                <option value="casual">Casual</option>
+                                <option value="formal">Formal</option>
+                                <option value="sport">Deportivo</option>
+                                <option value="party">Fiesta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estilo:</label>
+                            <select id="style">
+                                <option value="minimalist">Minimalista</option>
+                                <option value="urban">Urbano</option>
+                                <option value="boho">Boho</option>
+                                <option value="classic">Clásico</option>
+                            </select>
+                        </div>
+                        <button class="create-btn" onclick="generateOutfit()">
+                            🎨 Generar Outfit
+                        </button>
+                    </div>
+                    <div id="generatedOutfit" class="generated-outfit"></div>
+                </div>
+            </div>
+
+            <!-- My Outfits Page -->
+            <div id="outfits" class="page">
+                <div class="container">
+                    <h2>👗 Mis Outfits</h2>
+                    <div class="outfits-grid" id="outfitsGrid">
+                        <!-- User outfits will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Install PWA Banner -->
+        <div id="installBanner" class="install-banner hidden">
+            <div class="banner-content">
+                <span>📱 ¡Instala StyleMate en tu dispositivo!</span>
+                <button onclick="installPWA()">Instalar</button>
+                <button onclick="dismissInstall()">×</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
