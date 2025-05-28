@@ -1,0 +1,54 @@
+{
+  "name": "¿Qué me pongo? - Tu Asistente de Moda",
+  "short_name": "QueMePongo",
+  "description": "Tu stylist personal con IA. Organiza tu armario y crea outfits perfectos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ec4899",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Crear Look",
+      "short_name": "Crear",
+      "description": "Genera un outfit perfecto",
+      "url": "/create-outfit",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Mi Armario",
+      "short_name": "Armario",
+      "description": "Ver todas mis prendas",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "categories": ["lifestyle", "shopping"],
+  "lang": "es",
+  "dir": "ltr"
+}
