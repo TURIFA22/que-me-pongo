@@ -2,21 +2,21 @@
   "name": "¿Qué me pongo? - Tu Asistente de Moda",
   "short_name": "QueMePongo",
   "description": "Tu stylist personal con IA. Organiza tu armario y crea outfits perfectos.",
-  "start_url": "/",
+  "start_url": "/stylemate-app/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ec4899",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/stylemate-app/",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/stylemate-app/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/stylemate-app/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -30,7 +30,7 @@
       "url": "/create-outfit",
       "icons": [
         {
-          "src": "/icon-192.png",
+          "src": "/stylemate-app/icon-192.png",
           "sizes": "192x192"
         }
       ]
@@ -42,7 +42,7 @@
       "url": "/dashboard",
       "icons": [
         {
-          "src": "/icon-192.png",
+          "src": "/stylemate-app/icon-192.png",
           "sizes": "192x192"
         }
       ]
