@@ -1,0 +1,70 @@
+{
+  "packageId": "com.turifa22.quemepongo",
+  "host": "turifa22.github.io",
+  "name": "¿Qué me pongo?",
+  "launcherName": "QueMePongo",
+  "display": "standalone",
+  "themeColor": "#EC4899",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#EC4899",
+  "enableNotifications": true,
+  "startUrl": "/stylemate-app/",
+  "iconUrl": "https://turifa22.github.io/stylemate-app/icon-512.png",
+  "maskableIconUrl": "https://turifa22.github.io/stylemate-app/icon-512.png",
+  "monochromeIconUrl": "https://turifa22.github.io/stylemate-app/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "C:\\Users\\Win10\\Desktop\\aplcacion\\android.keystore",
+    "alias": "quemepongo"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Crear Look",
+      "shortName": "Crear",
+      "url": "https://turifa22.github.io/?page=create",
+      "chosenIconUrl": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>%E2%9C%A8</text></svg>"
+    },
+    {
+      "name": "Trending",
+      "shortName": "Trending",
+      "url": "https://turifa22.github.io/?page=trending",
+      "chosenIconUrl": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>%F0%9F%94%A5</text></svg>"
+    },
+    {
+      "name": "Mis Outfits",
+      "shortName": "Outfits",
+      "url": "https://turifa22.github.io/?page=outfits",
+      "chosenIconUrl": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>%F0%9F%91%97</text></svg>"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://turifa22.github.io/stylemate-app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://turifa22.github.io/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "appVersion": "1"
+}
