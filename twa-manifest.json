@@ -1,5 +1,5 @@
 {
-  "packageId": "com.turifa22.quemepongo",
+  "packageId": "com.quemepongo.app",
   "host": "turifa22.github.io",
   "name": "¿Qué me pongo?",
   "launcherName": "QueMePongo",
@@ -10,7 +10,7 @@
   "navigationColorDark": "#000000",
   "navigationDividerColor": "#000000",
   "navigationDividerColorDark": "#000000",
-  "backgroundColor": "#EC4899",
+  "backgroundColor": "#FFFFFF",
   "enableNotifications": true,
   "startUrl": "/stylemate-app/",
   "iconUrl": "https://turifa22.github.io/stylemate-app/icon-512.png",
@@ -19,7 +19,7 @@
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\Win10\\Desktop\\aplcacion\\android.keystore",
-    "alias": "quemepongo"
+    "alias": "android"
   },
   "appVersionName": "1",
   "appVersionCode": 1,

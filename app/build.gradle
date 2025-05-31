@@ -21,7 +21,7 @@ plugins {
 }
 
 def twaManifest = [
-    applicationId: 'com.turifa22.quemepongo',
+    applicationId: 'com.quemepongo.app',
     hostName: 'turifa22.github.io', // The domain being opened in the TWA.
     launchUrl: '/stylemate-app/', // The start path for the TWA. Must be relative to the domain.
     name: '¿Qué me pongo?', // The application name.
@@ -32,7 +32,7 @@ def twaManifest = [
     navigationColorDark: '#000000', // The color used for the dark navbar.
     navigationDividerColor: '#000000', // The navbar divider color.
     navigationDividerColorDark: '#000000', // The dark navbar divider color.
-    backgroundColor: '#EC4899', // The color used for the splash screen background.
+    backgroundColor: '#FFFFFF', // The color used for the splash screen background.
     enableNotifications: true, // Set to true to enable notification delegation.
     // Every shortcut must include the following fields:
     // - name: String that will show up in the shortcut.
@@ -52,9 +52,9 @@ def twaManifest = [
 
 android {
     compileSdkVersion 36
-    namespace "com.turifa22.quemepongo"
+    namespace "com.quemepongo.app"
     defaultConfig {
-        applicationId "com.turifa22.quemepongo"
+        applicationId "com.quemepongo.app"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 1

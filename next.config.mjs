@@ -3,14 +3,10 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    unoptimized: true
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  basePath: '/stylemate-app',
+  assetPrefix: '/stylemate-app'
 }
 
 export default nextConfig
