@@ -42,6 +42,7 @@
           transition: all 0.3s ease;
           cursor: pointer;
           border-radius: 12px;
+          position: relative;
       }
       .clothing-item:hover {
           transform: translateY(-4px);
@@ -186,10 +187,37 @@
           background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
           border: 1px solid #f59e0b;
       }
+      .delete-btn {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: rgba(239, 68, 68, 0.9);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          font-size: 12px;
+          cursor: pointer;
+          opacity: 0;
+          transition: all 0.3s ease;
+      }
+      .clothing-item:hover .delete-btn {
+          opacity: 1;
+      }
+      .predefined-item {
+          border: 2px dashed #9333ea;
+          background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%);
+      }
+      .predefined-item:hover {
+          border-style: solid;
+          background: linear-gradient(135deg, #e879f9 0%, #9333ea 100%);
+          color: white;
+      }
   </style>
 </head>
 <body class="gradient-bg min-h-screen">
-  <!-- Header Mejorado -->
+  <!-- Header -->
   <header class="glass-card shadow-lg border-b backdrop-blur-md">
       <div class="max-w-md mx-auto px-4 py-4">
           <div class="flex items-center justify-between">
@@ -232,7 +260,7 @@
       </div>
   </header>
 
-  <!-- Navigation Mejorada -->
+  <!-- Navigation -->
   <nav class="glass-card border-b backdrop-blur-md">
       <div class="max-w-md mx-auto px-4">
           <div class="flex space-x-1">
@@ -259,7 +287,7 @@
   </nav>
 
   <div class="max-w-md mx-auto px-4 py-6">
-      <!-- Mi Closet Tab Mejorado -->
+      <!-- Mi Closet Tab -->
       <div id="wardrobe-tab" class="tab-content">
           <!-- Header con estadísticas -->
           <div class="glass-card rounded-xl p-4 mb-6 shadow-lg">
@@ -339,13 +367,33 @@
               </div>
           </div>
 
-          <!-- Grid de prendas -->
+          <!-- Catálogo predeterminado -->
+          <div id="predefined-section" class="mb-6">
+              <h3 class="font-semibold mb-3 flex items-center gap-2">
+                  <i class="fas fa-star text-yellow-500"></i>
+                  Catálogo Básico
+                  <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">¡Añade rápido!</span>
+              </h3>
+              <div class="grid grid-cols-2 gap-3" id="predefined-grid">
+                  <!-- Se llena con JavaScript -->
+              </div>
+          </div>
+
+          <!-- Grid de prendas del usuario -->
+          <div class="mb-4">
+              <h3 class="font-semibold mb-3 flex items-center gap-2">
+                  <i class="fas fa-user text-purple-600"></i>
+                  Mis Prendas
+                  <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full" id="user-clothes-count">0</span>
+              </h3>
+          </div>
+
           <div id="clothes-grid" class="grid grid-cols-2 gap-4">
               <!-- Estado vacío -->
               <div id="empty-state" class="col-span-2 empty-state">
                   <i class="fas fa-tshirt text-6xl text-gray-300 mb-4"></i>
-                  <h3 class="text-lg font-semibold text-gray-500 mb-2">Tu closet está vacío</h3>
-                  <p class="text-gray-400 mb-4">Añade tus primeras prendas para empezar a crear outfits increíbles</p>
+                  <h3 class="text-lg font-semibold text-gray-500 mb-2">Tu closet personal está vacío</h3>
+                  <p class="text-gray-400 mb-4">Añade tus prendas personales o elige del catálogo básico</p>
                   <button onclick="showAddClothingModal()" class="gradient-btn text-white px-6 py-3 rounded-lg font-medium">
                       <i class="fas fa-plus mr-2"></i>
                       Añadir Primera Prenda
@@ -354,6 +402,7 @@
           </div>
       </div>
 
+      <!-- Resto de tabs (avatar, community, challenges) permanecen igual -->
       <!-- Probador Virtual Tab -->
       <div id="avatar-tab" class="tab-content hidden">
           <div class="text-center mb-6">
@@ -784,7 +833,6 @@
       </div>
   </div>
 
-  <!-- Resto de modales (auth, profile, etc.) -->
   <!-- Modal de Autenticación -->
   <div id="auth-modal" class="modal hidden">
       <div class="modal-content">
@@ -925,7 +973,7 @@
           </div>
 
           <div class="space-y-3">
-              <button class="w-full glass-card border border-purple-200 text-purple-700 py-3 px-4 rounded-lg hover:bg-purple-50 transition-all font-medium">
+              <button onclick="showEditProfile()" class="w-full glass-card border border-purple-200 text-purple-700 py-3 px-4 rounded-lg hover:bg-purple-50 transition-all font-medium">
                   <i class="fas fa-edit mr-2"></i>
                   Editar Perfil
               </button>
@@ -938,6 +986,54 @@
                   Cerrar Sesión
               </button>
           </div>
+      </div>
+  </div>
+
+  <!-- Modal de Editar Perfil -->
+  <div id="edit-profile-modal" class="modal hidden">
+      <div class="modal-content">
+          <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-bold gradient-text">Editar Perfil</h2>
+              <button onclick="hideEditProfile()" class="text-gray-400 hover:text-gray-600 text-xl">
+                  <i class="fas fa-times"></i>
+              </button>
+          </div>
+          
+          <form onsubmit="updateProfile(event)">
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-medium mb-2">Nombre completo</label>
+                  <div class="relative">
+                      <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                      <input type="text" id="edit-name" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all">
+                  </div>
+              </div>
+              
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                  <div class="relative">
+                      <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
+                      <input type="email" id="edit-email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all">
+                  </div>
+              </div>
+              
+              <div class="mb-6">
+                  <label class="block text-gray-700 text-sm font-medium mb-2">Teléfono (opcional)</label>
+                  <div class="relative">
+                      <i class="fas fa-phone absolute left-3 top-3 text-gray-400"></i>
+                      <input type="tel" id="edit-phone" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all" placeholder="+54 9 11 1234-5678">
+                  </div>
+              </div>
+              
+              <div class="flex gap-3">
+                  <button type="button" onclick="hideEditProfile()" class="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-all font-medium">
+                      Cancelar
+                  </button>
+                  <button type="submit" class="flex-1 gradient-btn text-white py-3 px-4 rounded-lg font-medium shadow-lg">
+                      <i class="fas fa-save mr-2"></i>
+                      Guardar Cambios
+                  </button>
+              </div>
+          </form>
       </div>
   </div>
 
@@ -1004,6 +1100,70 @@
       let userClothes = [];
       let savedOutfits = [];
       let currentFilter = 'all';
+
+      // Catálogo predeterminado de prendas básicas
+      const predefinedClothes = [
+          {
+              id: 'pred_1',
+              name: 'Remera Negra Básica',
+              category: 'tops',
+              color: 'Negro',
+              brand: 'Básica',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Remera+Negra',
+              isPredefined: true
+          },
+          {
+              id: 'pred_2',
+              name: 'Remera Blanca Oversize',
+              category: 'tops',
+              color: 'Blanco',
+              brand: 'Básica',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Remera+Blanca',
+              isPredefined: true
+          },
+          {
+              id: 'pred_3',
+              name: 'Jeans Azul Clásico',
+              category: 'bottoms',
+              color: 'Azul',
+              brand: 'Denim',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Jeans+Azul',
+              isPredefined: true
+          },
+          {
+              id: 'pred_4',
+              name: 'Jeans Negro Skinny',
+              category: 'bottoms',
+              color: 'Negro',
+              brand: 'Denim',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Jeans+Negro',
+              isPredefined: true
+          },
+          {
+              id: 'pred_5',
+              name: 'Zapatillas Blancas',
+              category: 'shoes',
+              color: 'Blanco',
+              brand: 'Sport',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Zapatillas',
+              isPredefined: true
+          },
+          {
+              id: 'pred_6',
+              name: 'Zapatillas Negras',
+              category: 'shoes',
+              color: 'Negro',
+              brand: 'Sport',
+              style: 'casual',
+              image: '/placeholder.svg?height=150&width=150&text=Zapatillas+Negras',
+              isPredefined: true
+          }
+      ];
 
       // Datos de la comunidad
       const communityLooks = [
@@ -1099,6 +1259,7 @@
           currentUser = {
               name: email.split('@')[0],
               email: email,
+              phone: '',
               points: 0,
               outfits: 0,
               challenges: 0,
@@ -1127,6 +1288,7 @@
           currentUser = {
               name: name,
               email: email,
+              phone: '',
               points: 0,
               outfits: 0,
               challenges: 0,
@@ -1195,6 +1357,35 @@
 
       function hideProfile() {
           document.getElementById('profile-modal').classList.add('hidden');
+      }
+
+      function showEditProfile() {
+          if (!currentUser) return;
+          
+          document.getElementById('edit-name').value = currentUser.name;
+          document.getElementById('edit-email').value = currentUser.email;
+          document.getElementById('edit-phone').value = currentUser.phone || '';
+          
+          hideProfile();
+          document.getElementById('edit-profile-modal').classList.remove('hidden');
+      }
+
+      function hideEditProfile() {
+          document.getElementById('edit-profile-modal').classList.add('hidden');
+      }
+
+      function updateProfile(event) {
+          event.preventDefault();
+          
+          if (!currentUser) return;
+          
+          currentUser.name = document.getElementById('edit-name').value;
+          currentUser.email = document.getElementById('edit-email').value;
+          currentUser.phone = document.getElementById('edit-phone').value;
+          
+          updateUserInterface();
+          hideEditProfile();
+          showNotification('Perfil actualizado correctamente ✅');
       }
 
       // Funciones de premium
@@ -1296,7 +1487,8 @@
                   brand: brand,
                   style: style,
                   image: e.target.result,
-                  dateAdded: new Date().toISOString()
+                  dateAdded: new Date().toISOString(),
+                  isPredefined: false
               };
 
               userClothes.push(newClothing);
@@ -1313,6 +1505,32 @@
           reader.readAsDataURL(imageFile);
       }
 
+      // Función para añadir prenda predefinida
+      function addPredefinedClothing(predefinedItem) {
+          if (!currentUser) {
+              showNotification('Inicia sesión para añadir prendas', 'error');
+              showAuthModal();
+              return;
+          }
+
+          const newClothing = {
+              ...predefinedItem,
+              id: Date.now(),
+              isPredefined: false,
+              dateAdded: new Date().toISOString()
+          };
+
+          userClothes.push(newClothing);
+          updateStats();
+          renderClothes();
+          showNotification(`¡${predefinedItem.name} añadido a tu closet! 👕`);
+          
+          if (currentUser) {
+              currentUser.points += 3;
+              updateUserInterface();
+          }
+      }
+
       // Funciones de filtrado
       function filterClothes(category) {
           currentFilter = category;
@@ -1326,6 +1544,7 @@
           event.target.classList.add('bg-purple-600', 'text-white');
           
           renderClothes();
+          renderPredefinedClothes();
       }
 
       // Funciones de selección de prendas
@@ -1339,12 +1558,18 @@
 
       function updateClothingSelection(type, itemId) {
           const clothesGrid = document.getElementById('clothes-grid');
+          const predefinedGrid = document.getElementById('predefined-grid');
           
+          // Limpiar selecciones anteriores
           clothesGrid.querySelectorAll('.clothing-item').forEach(item => {
               item.classList.remove('outfit-selected');
           });
+          predefinedGrid.querySelectorAll('.clothing-item').forEach(item => {
+              item.classList.remove('outfit-selected');
+          });
           
-          const selectedElement = clothesGrid.querySelector(`[data-id="${itemId}"]`);
+          // Marcar el elemento seleccionado
+          const selectedElement = document.querySelector(`[data-id="${itemId}"]`);
           if (selectedElement) {
               selectedElement.classList.add('outfit-selected');
           }
@@ -1359,7 +1584,9 @@
           const outfitList = document.getElementById('outfit-list');
           const noClothesMessage = document.getElementById('no-clothes-message');
 
-          if (userClothes.length === 0) {
+          const totalClothes = userClothes.length;
+          
+          if (totalClothes === 0) {
               noClothesMessage.style.display = 'block';
               outfitDetails.style.display = 'none';
               return;
@@ -1407,15 +1634,17 @@
 
       // Generar outfit aleatorio
       function generateRandomOutfit() {
-          if (userClothes.length === 0) {
+          const allClothes = [...userClothes];
+          
+          if (allClothes.length === 0) {
               showNotification('Añade prendas a tu closet primero', 'error');
               showTab('wardrobe');
               return;
           }
 
-          const tops = userClothes.filter(item => item.category === 'tops');
-          const bottoms = userClothes.filter(item => item.category === 'bottoms');
-          const shoes = userClothes.filter(item => item.category === 'shoes');
+          const tops = allClothes.filter(item => item.category === 'tops');
+          const bottoms = allClothes.filter(item => item.category === 'bottoms');
+          const shoes = allClothes.filter(item => item.category === 'shoes');
 
           if (tops.length > 0) {
               const randomTop = tops[Math.floor(Math.random() * tops.length)];
@@ -1518,12 +1747,39 @@
 
       // Actualizar estadísticas
       function updateStats() {
-          document.getElementById('total-clothes').textContent = userClothes.length;
+          const totalUserClothes = userClothes.length;
+          document.getElementById('total-clothes').textContent = totalUserClothes;
           document.getElementById('total-outfits').textContent = savedOutfits.length;
           document.getElementById('total-likes').textContent = currentUser ? currentUser.likes : 0;
+          document.getElementById('user-clothes-count').textContent = totalUserClothes;
       }
 
-      // Renderizar ropa
+      // Renderizar catálogo predefinido
+      function renderPredefinedClothes() {
+          const predefinedGrid = document.getElementById('predefined-grid');
+          
+          let filteredPredefined = predefinedClothes;
+          if (currentFilter !== 'all') {
+              filteredPredefined = predefinedClothes.filter(item => item.category === currentFilter);
+          }
+
+          predefinedGrid.innerHTML = filteredPredefined.map(item => `
+              <div class="predefined-item clothing-item cursor-pointer rounded-xl p-3 transition-all hover:shadow-lg" 
+                   data-id="${item.id}" onclick="selectItem(${JSON.stringify(item).replace(/"/g, '&quot;')}, '${item.category === 'tops' ? 'top' : item.category === 'bottoms' ? 'bottom' : 'shoes'}')">
+                  <img src="${item.image}" alt="${item.name}" class="w-full h-20 object-cover rounded-lg mb-2 shadow-sm">
+                  <div class="space-y-1">
+                      <p class="font-semibold text-xs text-gray-800">${item.name}</p>
+                      <p class="text-xs text-gray-500">${item.color}</p>
+                      <button onclick="event.stopPropagation(); addPredefinedClothing(${JSON.stringify(item).replace(/"/g, '&quot;')})" 
+                              class="w-full bg-purple-600 text-white text-xs py-1 px-2 rounded-lg hover:bg-purple-700 transition-colors">
+                          <i class="fas fa-plus mr-1"></i>Añadir
+                      </button>
+                  </div>
+              </div>
+          `).join('');
+      }
+
+      // Renderizar ropa del usuario
       function renderClothes() {
           const clothesGrid = document.getElementById('clothes-grid');
           const emptyState = document.getElementById('empty-state');
@@ -1539,7 +1795,7 @@
                   clothesGrid.innerHTML = '';
                   clothesGrid.appendChild(emptyState);
               } else {
-                  clothesGrid.innerHTML = '<div class="col-span-2 text-center py-8 text-gray-500">No hay prendas en esta categoría</div>';
+                  clothesGrid.innerHTML = '<div class="col-span-2 text-center py-8 text-gray-500">No hay prendas tuyas en esta categoría</div>';
               }
               return;
           }
@@ -1549,16 +1805,14 @@
           clothesGrid.innerHTML = filteredClothes.map(item => `
               <div class="clothing-item cursor-pointer rounded-xl border-2 border-gray-200 p-4 transition-all hover:shadow-xl bg-white" 
                    data-id="${item.id}" onclick="selectItem(${JSON.stringify(item).replace(/"/g, '&quot;')}, '${item.category === 'tops' ? 'top' : item.category === 'bottoms' ? 'bottom' : 'shoes'}')">
+                  <button onclick="event.stopPropagation(); deleteClothing(${item.id})" class="delete-btn">
+                      <i class="fas fa-trash"></i>
+                  </button>
                   <img src="${item.image}" alt="${item.name}" class="w-full h-24 object-cover rounded-lg mb-3 shadow-sm">
                   <div class="space-y-1">
                       <p class="font-semibold text-sm text-gray-800">${item.name}</p>
                       <p class="text-xs text-gray-500">${item.color} • ${item.brand}</p>
-                      <div class="flex justify-between items-center">
-                          <span class="inline-block bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">${item.style}</span>
-                          <button onclick="event.stopPropagation(); deleteClothing(${item.id})" class="text-red-400 hover:text-red-600 text-xs">
-                              <i class="fas fa-trash"></i>
-                          </button>
-                      </div>
+                      <span class="inline-block bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">${item.style}</span>
                   </div>
               </div>
           `).join('');
@@ -1650,6 +1904,7 @@
       // Inicializar aplicación
       document.addEventListener('DOMContentLoaded', function() {
           renderCommunity();
+          renderPredefinedClothes();
           updateWeather();
           updateUserInterface();
           updateStats();
